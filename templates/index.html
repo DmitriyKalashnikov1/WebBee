@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="shortcut icon">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="icon">
+    <title>WebBee Portal</title>
+</head>
+<body>
+<div class="header">
+    <ol>
+        <li>  <button class="header-buttons" onclick="document.location='selectRegion.html'">Выбор региона</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='whoami.html'">Кто я</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='beekeepers.html'">Пчеловод</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='farmers.html'">Фермер</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='advertisers.html'">Рекламодатель</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='workers.html'">Соискатель на работу</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='roscoltrol.html'">Надзор</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='index.html'">О нас</button> </li>
+    </ol>
+</div>
+
+<div class="main-text">
+        <h2> О данном сайте</h2>
+    <div class="about"> Данный сайт является порталом, на котором люди, работающие в сфере пчеловодства, могут находить себе в команду пчеловодов и фермеров,</div>
+      <br>а также оперативно получить информацию по вопросам пчеловодства от Правительства РФ.
+
+    <div class="table-of-contacts">
+        <table>
+            <tr>
+                <th>ФИО</th>
+                <th>Должность</th>
+                <th>Email</th>
+                <th>Телефон</th>
+            </tr>
+            {% for a in autors %}
+            <tr>
+                <td>{{ a["Name"] }}</td>
+                <td>{{ a["Work"] }}</td>
+                <td>{{ a["Email"] }}</td>
+                <td>{{ a["Telephon"] }}</td>
+            </tr>
+            {%endfor%}
+<!--            <tr>-->
+<!--                <td>Томаков Владимир И.</td>-->
+<!--                <td>Гениральный директор сайта</td>-->
+<!--                <td>vasypupkin@yandex.ru</td>-->
+<!--                <td>85565342343</td>-->
+<!--            </tr>-->
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
