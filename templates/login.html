@@ -14,7 +14,19 @@
     <form method="post" action="login.html">
         <h3 class="text-center">Форма входа</h3>
         <div class="form-group">
-            <input class="form-control item" type="text" name="username" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="username" placeholder="Логин" required>
+            <input class="form-control item" type="text" name="lastName" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="lastName" placeholder="Фамилия">
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="text" name="firstName" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="firstName" placeholder="Имя">
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="text" name="secondName" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="secondName" placeholder="Отчество">
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="text" name="loginName" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="loginName" placeholder="login" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="tel" name="phone"  id="phone" placeholder="+X XXX XXX-XX-XX" required>
         </div>
         <div class="form-group">
             <input class="form-control item" type="password" name="password" minlength="6" id="password" placeholder="Пароль" required>
@@ -22,8 +34,53 @@
         <div class="form-group">
             <input class="form-control item" type="email" name="email" id="email" placeholder="Email" required>
         </div>
+
         <div class="form-group">
-            <button class="btn btn-primary btn-block create-account" type="submit">Вход в аккаунт</button>
+            <input class="form-control item" type="text" name="work" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="work" placeholder="Должность">
+        </div>
+
+        <div class="form-group">
+            <label for="numberOfPassportofPasika"> Введите номер паспорта пасеки </label>
+            <input class="form-control item" type="number" name="numberOfPassportofPasika" id="numberOfPassportofPasika">
+        </div>
+
+        <div class="form-group">
+            <label for="numberOfFamily"> Введите количество семей пчел </label>
+            <input class="form-control item" type="number" name="numberOfFamily" id="numberOfFamily">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="radio" name="isStat" id="stat" value="stat">
+            <label for="stat"> Стационар </label>
+            <input class="form-control item" type="radio" name="isStat" id="noStat" value="noStat" required>
+            <label for="noStat"> Кочевка </label>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="checkbox" name="hasMoveablePlotform" id="hasMoveablePlotform" value="yes">
+            <label for="hasMoveablePlotform"> Имеются ли передвижные платформы (галочка активна -- да, не активна -- нет) </label>
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="radio" name="purpose" id="med" value="med">
+            <label for="med"> Цель: медовое направление</label>
+            <input class="form-control item" type="radio" name="purpose" id="razvod" value="razvod">
+            <label for="razvod"> Цель: Разведение </label>
+            <input class="form-control item" type="radio" name="purpose" id="opul" value="opul">
+            <label for="razvod"> Цель: Опыление </label>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="about" maxlength="350" minlength="0" id="about" placeholder="Расскажите о себе">
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="radio" name="loginOrReg" id="login" value="login" required>
+            <label for="login"> Я захожу в учетнаю запись </label>
+            <input class="form-control item" type="radio" name="loginOrReg" id="reg" value="registr" required>
+            <label for="reg"> Я создаю учетнаю запись </label>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-block create-account" type="submit">Вход в аккаунт/Регистрация</button>
         </div>
     </form>
 </div>

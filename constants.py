@@ -6,13 +6,14 @@ AUTORS = [{"Name": "Калашников Дмитрий Александрови
            "Email": "polykovMatvey@yandex.ru", "Telephon": "83458342343"}
           ]
 WHOAMI = {
-        "Name":"Томаков Владимир И.",
+        "Login": "test_user",
+        "Name":"Тестович Владимир Т.",
         "Work":"Пчеловод",
         "Email": "vasypupkin@yandex.ru",
         "Telephon": "85565342343",
         "About": "Опытный пчеловод со стажем работы более 10-ти лет",
         "numberOfPassportofPasika": 5312420034569,
-        "numberOfFamaly": 50,
+        "numberOfFamily": 50,
         "isStat": "Стационар",
         "hasMoveablePlatform": "Да",
         "purpose": "Медовое направление",

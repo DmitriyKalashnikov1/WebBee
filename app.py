@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 import os
 import constants
+import db_api
 
 app = Flask(__name__)
 app.debug = True
@@ -12,20 +13,69 @@ def index():
 @app.route('/whoami.html', methods=["GET", "POST"])
 def whoami():
     if ("isAutorise" in session):
-        return render_template("whoami.html", who=constants.WHOAMI, ads=constants.Ads)
+        return render_template("whoami.html", who=session['user'], ads=session['ads'])
     else:
         return render_template("login.html")
 
 @app.post("/login.html")
 def login():
-    username = request.form.get('username')  # запрос к данным формы
+    login = request.form.get('loginName')  # запрос к данным формы
+    firstName = request.form.get("firstName")
+    secondName = request.form.get("secondName")
+    lastName = request.form.get("lastName")
     password = request.form.get('password')
     email = request.form.get("email")
-    print(username, password, email)
-    session["isAutorise"] = 1
-    session["username"] = username
-    session["password"] = password
-    session["email"] = email
+    work = request.form.get("work")
+    numberOfPasportOfPasika = request.form.get("numberOfPassportofPasika")
+    numberOfFamily = request.form.get("numberOfFamily")
+    isStat = request.form.get("isStat")
+    hasMoveablePlotform = request.form.get("hasMoveablePlotform")
+    purpose = request.form.get("purpose")
+    about = request.form.get("about")
+    loginOrReg = request.form.get("loginOrReg")
+    phone = request.form.get("phone")
+
+    #print(loginOrReg)
+
+    if (loginOrReg == "login"):
+        info, ads = db_api.find_user(login, password)
+        if (not (info == None)):
+            session["isAutorise"] = 1
+            session["user"] = info
+            session["ads"] = ads
+        else:
+            session["isAutorise"] = 1
+            session["user"] = constants.WHOAMI
+            session["ads"] = constants.Ads
+    elif (loginOrReg == "registr"):
+        user_info = {
+            "Login": login,
+            "Name": lastName + " " + firstName + " " + secondName,
+            "Work": work,
+            "Email": email,
+            "Telephon": phone,
+            "About": about,
+            "numberOfPassportofPasika": numberOfPasportOfPasika,
+            "numberOfFamily": numberOfFamily,
+        }
+        if (isStat == 'stat'):
+            user_info["isStat"] = "Стационар"
+        else:
+            user_info["isStat"] = "Кочевка"
+
+        if (hasMoveablePlotform == "yes"):
+            user_info["hasMoveablePlotform"] = "Да"
+
+        if (purpose == "med"):
+            user_info["purpose"] = "Цель: медовое направление"
+        elif (purpose == "razvod"):
+            user_info["purpose"] = "Цель: Разведение"
+        elif (purpose == "opul"):
+            user_info["purpose"] = "Цель: Опыление"
+
+     #   print(user_info)
+        status = db_api.regist_user(user_info)
+
     return redirect("whoami.html")
 
 
