@@ -52,17 +52,23 @@
         <table>
             <tr>
                 <th>Заголовок</th>
+                <th>Id</th>
                 <th>Адрес</th>
-                <th>Подрробности</th>
+                <th>Подробности</th>
             </tr>
             {% for a in ads %}
             <tr>
                 <td>{{ a["Title"] }}</td>
+                <td>{{ a["id"] }}</td>
                 <td>{{ a["Adres"] }}</td>
                 <td>{{ a["About"] }}</td>
+                <td> <button onclick="document.location='changeAdd.html'">Редактировать запись</button> </td>
+                <td> <button onclick="document.location='removeAdd.html'">Удалить запись</button> </td>
             </tr>
             {%endfor%}
+            <tr> <button onclick="document.location='AddAdd.html'">Новая запись</button></tr>
         </table>
+
     </div>
 {%endif%}
 {%if ads == None%}

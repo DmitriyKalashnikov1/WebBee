@@ -50,6 +50,7 @@ def login():
     elif (loginOrReg == "registr"):
         user_info = {
             "Login": login,
+            "Passwd": password,
             "Name": lastName + " " + firstName + " " + secondName,
             "Work": work,
             "Email": email,
@@ -77,6 +78,28 @@ def login():
         status = db_api.regist_user(user_info)
 
     return redirect("whoami.html")
+
+
+@app.route("/AddAdd.html")
+def AddAddHTML():
+    return render_template("AddAdd.html")
+
+@app.route("/AddAdd/", methods=["POST",])
+def AddAdd():
+    title = request.form.get("title")
+    id = request.form.get("id")
+    adres = request.form.get("adres")
+    about = request.form.get("about")
+    #print(title, id, adres, about, session)
+    newAdd = {
+        "Title": title,
+        "id": id,
+        "Adres": adres,
+        "About": about
+    }
+    status = db_api.add_ads_for_user(session["user"]["Login"], session["user"]["Passwd"], newAdd)
+    session["ads"] += [newAdd]
+    return redirect("/whoami.html")
 
 
 if __name__ == '__main__':

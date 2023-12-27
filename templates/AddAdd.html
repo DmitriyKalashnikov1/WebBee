@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="shortcut icon">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="icon">
+    <title>AddForm</title>
+</head>
+<body>
+<div class="registration-cssave">
+    <form method="post" action="/AddAdd/">
+        <h3 class="text-center">Форма добавления рекламы</h3>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="title" maxlength="350" minlength="0" id="title" placeholder="Заголовок рекламы" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id"> Введите id </label>
+            <input class="form-control item" type="number" name="id" id="id">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="adres" maxlength="350" minlength="0" id="ardes" placeholder="Введите адрес" required>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="about" maxlength="350" minlength="0" id="about" placeholder="Введите текст рекламы" required>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-block create-account" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
