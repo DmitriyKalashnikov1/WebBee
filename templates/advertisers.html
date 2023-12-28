@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="shortcut icon">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="icon">
+    <title>Рекламодатель</title>
+</head>
+<body>
+<div class="header">
+    <ol>
+        <li>  <button class="header-buttons" onclick="document.location='selectRegion.html'">Выбор региона</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='whoami.html'">Кто я</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='beekeepers.html'">Пчеловод</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='farmers.html'">Фермер</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='advertisers.html'">Рекламодатель</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='workers.html'">Соискатель на работу</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='roscoltrol.html'">Надзор</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='index.html'">О нас</button> </li>
+    </ol>
+</div>
+
+<div class="main-text">
+    {%if not (ads == None)%}
+        <div class="table-of-contacts">
+            <table>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Заголовок</th>
+                    <th>Адрес</th>
+                    <th>Подробности</th>
+                </tr>
+                {% for a in ads %}
+            <tr>
+                <td>{{ a["FIO"] }}</td>
+                <td>{{ a["Tel"] }}</td>
+                <td>{{ a["Title"] }}</td>
+                <td>{{ a["Adres"] }}</td>
+                <td>{{ a["About"] }}</td>
+            </tr>
+            {%endfor%}
+            </table>
+        </div>
+    {%endif%}
+
+    {%if (ads == None)%}
+    <h1> Пользователей с объявлениями типа 'Рекламодатель' еще нет, станьте первым!</h1>
+    {%endif%}
+</div>
+
+</body>
+</html>

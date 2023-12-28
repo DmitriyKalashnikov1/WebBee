@@ -2,13 +2,13 @@ AUTORS = [{"Name": "Калашников Дмитрий Александрови
            "Email": "slagterra2017@yandex.ru", "Telephon": "89185576353"},
           {"Name": "Томаков Владимир И.", "Work": "Гениральный директор сайта",
            "Email": "vasypupkin@yandex.ru", "Telephon": "85565342343"},
-          {"Name": "Поляков Матвей", "Work": "Специалист по БД",
-           "Email": "polykovMatvey@yandex.ru", "Telephon": "83458342343"}
+          #{"Name": "Поляков Матвей", "Work": "Специалист по БД",
+          # "Email": "polykovMatvey@yandex.ru", "Telephon": "83458342343"}
           ]
 WHOAMI = {
         "Login": "test_user",
         "Passwd": "2345671vx",
-        "Name":"Тестович Владимир Т.",
+        "Name":"Иванов Владимир Т.",
         "Work":"Пчеловод",
         "Email": "vasypupkin@yandex.ru",
         "Telephon": "85565342343",
