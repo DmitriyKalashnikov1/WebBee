@@ -35,7 +35,7 @@ def login():
     loginOrReg = request.form.get("loginOrReg")
     phone = request.form.get("phone")
 
-    #print(loginOrReg)
+    #print(work)
 
     if (loginOrReg == "login"):
         info, ads = db_api.find_user(login, password)
@@ -66,6 +66,8 @@ def login():
 
         if (hasMoveablePlotform == "yes"):
             user_info["hasMoveablePlotform"] = "Да"
+        else:
+            user_info["hasMoveablePlotform"] = "Нет"
 
         if (purpose == "med"):
             user_info["purpose"] = "Цель: медовое направление"
@@ -74,10 +76,117 @@ def login():
         elif (purpose == "opul"):
             user_info["purpose"] = "Цель: Опыление"
 
-     #   print(user_info)
-        status = db_api.regist_user(user_info)
+        if user_info["Work"] == 'Пчеловод':
+            return redirect("whoami.html")
+        elif user_info["Work"] == 'Фермер':
+            session["preRegistrInfo"] = user_info
+            return redirect("dop_registr_farmers.html")
+        elif user_info["Work"] == 'Соискатель':
+            session["preRegistrInfo"] = user_info
+            return redirect("dop_registr_workers.html")
+        elif user_info["Work"] == 'Рекламодатель':
+            session["preRegistrInfo"] = user_info
+            return redirect("dop_registr_advertisers.html")
+        else:
+            print("Ethernet error")
+            return redirect("whoami.html")
 
-    return redirect("whoami.html")
+@app.route("/dop_registr_farmers.html")
+def dop_registr_farmers():
+    return render_template("dop_registr_farmers.html")
+
+@app.route("/dop_registr_workers.html")
+def dop_registr_workers():
+    return render_template("dop_registr_workers.html")
+
+@app.route("/dop_registr_advertisers.html")
+def dop_registr_advertisers():
+    return render_template("dop_registr_advertisers.html")
+
+@app.route("/FarmersReg/", methods=["POST",])
+def FarmersReg():
+    preRegistrInfo = session["preRegistrInfo"]
+    inn = request.form.get("inn")
+    ogrn = request.form.get("ogrn")
+    fax = request.form.get("fax")
+    site = request.form.get("site")
+    plantArea = request.form.get("plantArea")
+    raps = request.form.get("raps")
+    grechka = request.form.get("grechka")
+    podsun = request.form.get("podsun")
+    gorchza = request.form.get("gorchza")
+    needOpul = request.form.get("needOpul")
+    price = request.form.get("price")
+    delivery = request.form.get("delivery")
+    secure = request.form.get("secure")
+    user_info = {
+        "Login": preRegistrInfo["Login"],
+        "Passwd": preRegistrInfo["Passwd"],
+        "Name": preRegistrInfo["Name"],
+        "Work": preRegistrInfo["Work"],
+        "Email": preRegistrInfo["Email"],
+        "Telephon": preRegistrInfo["Telephon"],
+        "About": preRegistrInfo["About"],
+        "INN": inn,
+        "OGRN": ogrn,
+        "Fax": fax,
+        "Site": site,
+        "PlantArea": plantArea,
+        "Raps": raps,
+        "Grechka": grechka,
+        "Podsun": podsun,
+        "Gorchza": gorchza,
+        "needOpul": needOpul,
+        "Price": price,
+        "Delivery": delivery,
+        "Secure": secure
+    }
+    #print(user_info)
+    db_api.regist_user(user_info)
+    return redirect("/whoami.html")
+
+
+@app.route("/WorkersReg/", methods=["POST",])
+def WorkersReg():
+    preRegistrInfo = session["preRegistrInfo"]
+    workType = request.form.get("workType")
+
+    user_info = {
+        "Login": preRegistrInfo["Login"],
+        "Passwd": preRegistrInfo["Passwd"],
+        "Name": preRegistrInfo["Name"],
+        "Work": preRegistrInfo["Work"],
+        "Email": preRegistrInfo["Email"],
+        "Telephon": preRegistrInfo["Telephon"],
+        "About": preRegistrInfo["About"],
+        "WorkType": workType
+    }
+
+    #print(user_info)
+    db_api.regist_user(user_info)
+    return redirect("/whoami.html")
+
+@app.route("/AdvertisersReg/", methods=["POST",])
+def AdvertisersReg():
+    preRegistrInfo = session["preRegistrInfo"]
+    bannerType = request.form.get("bannerType")
+    bannerAbout = request.form.get("about")
+
+    user_info = {
+        "Login": preRegistrInfo["Login"],
+        "Passwd": preRegistrInfo["Passwd"],
+        "Name": preRegistrInfo["Name"],
+        "Work": preRegistrInfo["Work"],
+        "Email": preRegistrInfo["Email"],
+        "Telephon": preRegistrInfo["Telephon"],
+        "About": preRegistrInfo["About"],
+        "BannerType": bannerType,
+        "BannerAbout": bannerAbout
+    }
+
+    #print(user_info)
+    db_api.regist_user(user_info)
+    return redirect("/whoami.html")
 
 
 @app.route("/AddAdd.html")

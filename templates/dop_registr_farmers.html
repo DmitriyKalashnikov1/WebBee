@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="shortcut icon">
+    <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="icon">
+    <title>FarmersRegistration</title>
+    <style>
+        #raps{
+        width: 280px;
+        }
+        #grechka{
+        width: 280px;
+        }
+        #podsun{
+        width: 280px;
+        }
+        #gorchza{
+        width: 280px;
+        }
+    </style>
+</head>
+<body>
+<div class="registration-cssave">
+    <form method="post" action="/FarmersReg/">
+        <h3 class="text-center">Пожалуйста, введите дополнительные данные для категории "Фермер"</h3>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="inn" maxlength="350" minlength="0" id="inn" placeholder="ИНН" required>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="ogrn" maxlength="350" minlength="0" id="ogrn" placeholder="ОГРН" required>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="text" name="fax" maxlength="350" minlength="0" id="fax" placeholder="Факс">
+        </div>
+
+       <div class="form-group">
+            <input class="form-control item" type="text" name="site" maxlength="350" minlength="0" id="site" placeholder="Сайт">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="number" name="plantArea" maxlength="350" minlength="0" id="plantArea" placeholder="Посевная площадь (в Га)" required>
+        </div>
+
+        <h4>Выращиваемые культуры</h4>
+
+        <div class="form-group">
+            <input class="form-control item" type="number" name="raps" maxlength="350" minlength="0" id="raps" placeholder="Посевная площадь рапса (в Га)">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control item" type="number" name="grechka" maxlength="350" minlength="0" id="grechka" placeholder="Посевная площадь гречки (в Га)">
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="number" name="podsun" maxlength="350" minlength="0" id="podsun" placeholder="Посевная площадь подсолнечника (в Га)">
+        </div>
+        <div class="form-group">
+            <input class="form-control item" type="number" name="gorchza" maxlength="350" minlength="0" id="gorchza" placeholder="Посевная площадь горчицы (в Га)">
+        </div>
+
+        <h4> Необходимость опыления</h4>
+
+        <div class="form-group">
+            <input class="form-control item" type="radio" name="needOpul" id="NeedOpul" value="NeedOpul">
+            <label for="NeedOpul"> Требуются услуги опыления</label>
+            <input class="form-control item" type="radio" name="needOpul" id="NotNeedOpul" value="NotNeedOpul">
+            <label for="NotNeedOpul"> Готов разместить пасеку без услуг опыления </label>
+        </div>
+
+        <h4> Цена за опыление одной пасеки</h4>
+
+        <div class="form-group">
+            <input class="form-control item" type="number" name="price" maxlength="350" minlength="0" id="price" placeholder="Цена (в тыс. руб.)">
+        </div>
+
+        <h4> Доп. Услуги</h4>
+       <div class="form-group">
+            <input class="form-control item" type="checkbox" name="delivery" id="delivery" value="yes">
+            <label for="delivery"> Доставка (галочка активна -- да, не активна -- нет) </label>
+        </div>
+
+         <div class="form-group">
+            <input class="form-control item" type="checkbox" name="secure" id="secure" value="yes">
+            <label for="secure"> Охрана (галочка активна -- да, не активна -- нет) </label>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-block create-account" type="submit">Регистрация</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
