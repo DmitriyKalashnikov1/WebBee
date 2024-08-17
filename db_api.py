@@ -1,12 +1,44 @@
+import json
+import constants
+
+
 def find_user(login, password):
     #если юзер найден -- вернуть словари по типу whoami и ads из constants.py
     #если юзер не найден -- вернуть два None
-    return None, None
+    data = {}
+    with open(constants.DB_PATH, 'r') as fp:
+        data = json.load(fp)
+    correctUsers = []
+    for user in data:
+        if user["Login"] == login:
+            correctUsers.append(user)
+    if len(correctUsers) == 0:
+        return None, None
+    else:
+        if len(correctUsers) > 1:
+            user = {}
+            for i in range(len(correctUsers)):
+                if correctUsers[i]["Passwd"] == password:
+                    user = correctUsers[i]
+        else:
+            user = correctUsers[0]
+        adds = user.pop("ads")
+        return user, adds
 
 def regist_user(user_info):
     #Добавить пользователя в базу
     # вернуть 0 если операция успешна, 1 -- в противном случае
-    return 0
+    sucsess = 0
+    data = {}
+    try:
+        with open(constants.DB_PATH, 'r') as fp:
+            data = json.load(fp)
+        data += {user_info}
+        with open(constants.DB_PATH, 'r') as fp:
+            json.dump(data,fp)
+    except:
+        sucsess = 1
+    return sucsess
 def unregist_user(user_info):
     #Удалить пользователя из базы
     # вернуть 0 если операция успешна, 1 -- в противном случае

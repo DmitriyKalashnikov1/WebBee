@@ -13,7 +13,7 @@ def index():
 @app.route('/whoami.html', methods=["GET", "POST"])
 def whoami():
     if ("isAutorise" in session):
-        return render_template("whoami.html", who=session['user'], ads=session['ads'])
+        return render_template("whoami.html", who=session['user'], ads=session["user"]['ads'])
     else:
         return render_template("login.html")
 
@@ -139,7 +139,8 @@ def FarmersReg():
         "needOpul": needOpul,
         "Price": price,
         "Delivery": delivery,
-        "Secure": secure
+        "Secure": secure,
+        "ads": []
     }
     #print(user_info)
     db_api.regist_user(user_info)
@@ -159,7 +160,8 @@ def WorkersReg():
         "Email": preRegistrInfo["Email"],
         "Telephon": preRegistrInfo["Telephon"],
         "About": preRegistrInfo["About"],
-        "WorkType": workType
+        "WorkType": workType,
+        "ads": []
     }
 
     #print(user_info)
@@ -181,7 +183,8 @@ def AdvertisersReg():
         "Telephon": preRegistrInfo["Telephon"],
         "About": preRegistrInfo["About"],
         "BannerType": bannerType,
-        "BannerAbout": bannerAbout
+        "BannerAbout": bannerAbout,
+        "ads": []
     }
 
     #print(user_info)
@@ -207,7 +210,7 @@ def AddAdd():
         "About": about
     }
     status = db_api.add_ads_for_user(session["user"]["Login"], session["user"]["Passwd"], newAdd)
-    session["ads"] += [newAdd]
+    session["user"]["ads"] += [newAdd]
     return redirect("/whoami.html")
 @app.route("/changeAdd.html")
 def changeAddHTML():
@@ -235,9 +238,9 @@ def ChangeAdd():
             index = i
             #print("index found")
 
-    sAds = session.get("ads")
+    sAds = session["user"].get("ads")
     sAds[index] = newAdd
-    session['ads'] = sAds
+    session["user"]['ads'] = sAds
     return redirect("/whoami.html")
 
 @app.route("/removeAdd.html")
@@ -256,9 +259,9 @@ def removeAdd():
             index = i
             #print("index found")
 
-    sAds = session.get("ads")
+    sAds = session["user"].get("ads")
     rm = sAds.pop(index)
-    session['ads'] = sAds
+    session["user"]['ads'] = sAds
     return redirect("/whoami.html")
 
 @app.route("/beekeepers.html")
@@ -324,4 +327,7 @@ def selectRegion():
     return render_template("/selectRegion.html")
 
 if __name__ == '__main__':
+    if os.path.isfile(constants.DB_PATH) == False:
+        with open(constants.DB_PATH, 'w') as file:
+            file.write("")
     app.run()
