@@ -6,14 +6,16 @@ import db_api
 app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = str(os.urandom(20).hex())
+
 @app.route('/index.html')
 @app.route('/')
 def index():
     return render_template("index.html", autors=constants.AUTORS)
+
 @app.route('/whoami.html', methods=["GET", "POST"])
 def whoami():
     if ("isAutorise" in session):
-        return render_template("whoami.html", who=session['user'], ads=session["user"]['ads'])
+        return render_template("whoami.html", who=session['user'], ads=session['ads'])
     else:
         return render_template("login.html")
 
@@ -87,9 +89,8 @@ def login():
         elif user_info["Work"] == 'Рекламодатель':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_advertisers.html")
-        else:
-            print("Ethernet error")
-            return redirect("whoami.html")
+
+    return redirect("whoami.html")
 
 @app.route("/dop_registr_farmers.html")
 def dop_registr_farmers():
@@ -210,7 +211,10 @@ def AddAdd():
         "About": about
     }
     status = db_api.add_ads_for_user(session["user"]["Login"], session["user"]["Passwd"], newAdd)
-    session["user"]["ads"] += [newAdd]
+    session["ads"] += [newAdd]
+
+    if not session.modified:
+        session.modified = True
     return redirect("/whoami.html")
 @app.route("/changeAdd.html")
 def changeAddHTML():
@@ -238,9 +242,12 @@ def ChangeAdd():
             index = i
             #print("index found")
 
-    sAds = session["user"].get("ads")
+    sAds = session["ads"]
     sAds[index] = newAdd
-    session["user"]['ads'] = sAds
+    session['ads'] = sAds
+
+    if not session.modified:
+        session.modified = True
     return redirect("/whoami.html")
 
 @app.route("/removeAdd.html")
@@ -250,6 +257,7 @@ def removeAddHtml():
 @app.route("/removeAdd/", methods=["POST",])
 def removeAdd():
     id = int(request.form.get("id"))
+    print(session.items())
     status = db_api.remove_add_for_user(session["user"]["Login"], session["user"]["Passwd"], id)
     index = 0
     for i, add in enumerate(session["ads"]):
@@ -259,9 +267,13 @@ def removeAdd():
             index = i
             #print("index found")
 
-    sAds = session["user"].get("ads")
+    sAds = session["ads"]
     rm = sAds.pop(index)
-    session["user"]['ads'] = sAds
+    session['ads'] = sAds
+
+    if not session.modified:
+        session.modified = True
+
     return redirect("/whoami.html")
 
 @app.route("/beekeepers.html")

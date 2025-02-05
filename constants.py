@@ -18,6 +18,7 @@ WHOAMI = {
         "isStat": "Стационар",
         "hasMoveablePlatform": "Да",
         "purpose": "Медовое направление",
+        "ads": []
 }
 
 Ads = [
