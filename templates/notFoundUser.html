@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
     <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="shortcut icon">
     <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="icon">
-    <title>DeleteForm</title>
+    <title>Login failed!</title>
 </head>
 <body>
 <div class="header">
@@ -22,19 +22,10 @@
     </ol>
 </div>
 
-<div class="registration-cssave">
-    <form method="post" action="/removeAdd/">
-        <h3 class="text-center">Форма удаления рекламы</h3>
-
-        <div class="form-group">
-            <label for="id"> Введите id объявления, которое хотите удалить </label>
-            <input class="form-control item" type="number" name="id" id="id">
-        </div>
-
-        <div class="form-group">
-            <button class="btn btn-primary btn-block create-account" type="submit">Удалить</button>
-        </div>
-    </form>
-</div>
+<div class="main-text">
+    <h1>Пользователь с введенным логином и паролем не найден!
+    <br> Пожалуйста, повторите попытку входа!
+    </h1>
+</div>>
 </body>
 </html>

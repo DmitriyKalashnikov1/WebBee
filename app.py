@@ -38,6 +38,8 @@ def login():
     phone = request.form.get("phone")
 
     #print(work)
+    if not session.modified:
+        session.modified = True
 
     if (loginOrReg == "login"):
         info, ads = db_api.find_user(login, password)
@@ -46,9 +48,13 @@ def login():
             session["user"] = info
             session["ads"] = ads
         else:
-            session["isAutorise"] = 1
-            session["user"] = constants.WHOAMI
-            session["ads"] = constants.Ads
+            if (constants.HAS_TEST_DATA):
+                session["isAutorise"] = 1
+                session["user"] = constants.WHOAMI
+                session["ads"] = constants.Ads
+            else:
+                return render_template("notFoundUser.html")
+        return redirect("whoami.html")
     elif (loginOrReg == "registr"):
         user_info = {
             "Login": login,
@@ -58,6 +64,8 @@ def login():
             "Email": email,
             "Telephon": phone,
             "About": about,
+            "Region": "",
+            "ads": [],
             "numberOfPassportofPasika": numberOfPasportOfPasika,
             "numberOfFamily": numberOfFamily,
         }
@@ -72,13 +80,15 @@ def login():
             user_info["hasMoveablePlotform"] = "Нет"
 
         if (purpose == "med"):
-            user_info["purpose"] = "Цель: медовое направление"
+            user_info["purpose"] = "Медовое направление"
         elif (purpose == "razvod"):
-            user_info["purpose"] = "Цель: Разведение"
+            user_info["purpose"] = "Разведение"
         elif (purpose == "opul"):
-            user_info["purpose"] = "Цель: Опыление"
+            user_info["purpose"] = "Опыление"
 
         if user_info["Work"] == 'Пчеловод':
+            db_api.regist_user(user_info)
+
             return redirect("whoami.html")
         elif user_info["Work"] == 'Фермер':
             session["preRegistrInfo"] = user_info
@@ -90,7 +100,8 @@ def login():
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_advertisers.html")
 
-    return redirect("whoami.html")
+
+
 
 @app.route("/dop_registr_farmers.html")
 def dop_registr_farmers():
@@ -124,6 +135,7 @@ def FarmersReg():
         "Login": preRegistrInfo["Login"],
         "Passwd": preRegistrInfo["Passwd"],
         "Name": preRegistrInfo["Name"],
+        "Region": "",
         "Work": preRegistrInfo["Work"],
         "Email": preRegistrInfo["Email"],
         "Telephon": preRegistrInfo["Telephon"],
@@ -145,6 +157,10 @@ def FarmersReg():
     }
     #print(user_info)
     db_api.regist_user(user_info)
+    session['user'] = user_info
+
+    if not session.modified:
+        session.modified = True
     return redirect("/whoami.html")
 
 
@@ -157,6 +173,7 @@ def WorkersReg():
         "Login": preRegistrInfo["Login"],
         "Passwd": preRegistrInfo["Passwd"],
         "Name": preRegistrInfo["Name"],
+        "Region": "",
         "Work": preRegistrInfo["Work"],
         "Email": preRegistrInfo["Email"],
         "Telephon": preRegistrInfo["Telephon"],
@@ -167,6 +184,11 @@ def WorkersReg():
 
     #print(user_info)
     db_api.regist_user(user_info)
+    session["user"] = user_info
+
+    if not session.modified:
+        session.modified = True
+
     return redirect("/whoami.html")
 
 @app.route("/AdvertisersReg/", methods=["POST",])
@@ -179,6 +201,7 @@ def AdvertisersReg():
         "Login": preRegistrInfo["Login"],
         "Passwd": preRegistrInfo["Passwd"],
         "Name": preRegistrInfo["Name"],
+        "Region": "",
         "Work": preRegistrInfo["Work"],
         "Email": preRegistrInfo["Email"],
         "Telephon": preRegistrInfo["Telephon"],
@@ -190,6 +213,10 @@ def AdvertisersReg():
 
     #print(user_info)
     db_api.regist_user(user_info)
+    session["user"] = user_info
+
+    if not session.modified:
+        session.modified = True
     return redirect("/whoami.html")
 
 
@@ -257,7 +284,6 @@ def removeAddHtml():
 @app.route("/removeAdd/", methods=["POST",])
 def removeAdd():
     id = int(request.form.get("id"))
-    print(session.items())
     status = db_api.remove_add_for_user(session["user"]["Login"], session["user"]["Passwd"], id)
     index = 0
     for i, add in enumerate(session["ads"]):
@@ -282,12 +308,15 @@ def beekeepers():
     if not (adsf == None):
         return render_template("/beekeepers.html", ads=adsf)
     else:
-        user = constants.WHOAMI
-        adsf = constants.Ads
-        for a in adsf:
-            a["FIO"] = user["Name"]
-            a["Tel"] = user["Telephon"]
-        return render_template("/beekeepers.html", ads=adsf)
+        if (constants.HAS_TEST_DATA):
+            user = constants.WHOAMI
+            adsf = constants.Ads
+            for a in adsf:
+                a["FIO"] = user["Name"]
+                a["Tel"] = user["Telephon"]
+            return render_template("/beekeepers.html", ads=adsf)
+        else:
+            return render_template("/beekeepers.html", ads=None)
 
 @app.route("/farmers.html")
 def farmers():
@@ -295,11 +324,6 @@ def farmers():
     if not (adsf == None):
         return render_template("/farmers.html", ads=adsf)
     else:
-        # user = constants.WHOAMI
-        # adsf = constants.Ads
-        # for a in adsf:
-        #     a["FIO"] = user["Name"]
-        #     a["Tel"] = user["Telephon"]
         return render_template("/farmers.html", ads=None)
 
 
@@ -309,11 +333,6 @@ def advertisers():
     if not (adsf == None):
         return render_template("/advertisers.html", ads=adsf)
     else:
-        # user = constants.WHOAMI
-        # adsf = constants.Ads
-        # for a in adsf:
-        #     a["FIO"] = user["Name"]
-        #     a["Tel"] = user["Telephon"]
         return render_template("/advertisers.html", ads=None)
 
 
@@ -323,11 +342,6 @@ def workers():
     if not (adsf == None):
         return render_template("/workers.html", ads=adsf)
     else:
-        # user = constants.WHOAMI
-        # adsf = constants.Ads
-        # for a in adsf:
-        #     a["FIO"] = user["Name"]
-        #     a["Tel"] = user["Telephon"]
         return render_template("/workers.html", ads=None)
 
 @app.route("/roscoltrol.html")

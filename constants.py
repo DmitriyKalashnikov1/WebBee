@@ -9,6 +9,7 @@ WHOAMI = {
         "Login": "test_user",
         "Passwd": "2345671vx",
         "Name":"Иванов Владимир Т.",
+        "Region": "Курская область, г.Курск",
         "Work":"Пчеловод",
         "Email": "vasypupkin@yandex.ru",
         "Telephon": "85565342343",
@@ -37,3 +38,5 @@ Ads = [
 ]
 
 DB_PATH = './DB.json'
+
+HAS_TEST_DATA = False
