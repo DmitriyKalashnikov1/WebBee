@@ -61,9 +61,41 @@ def remove_add_for_user(login, password, id):
 def change_add_for_user(login, password, addNew):
     # изменить содержание рекламного элемента
     # вернуть 0 если операция успешна, 1 -- в противном случае
+    db = TinyDB(constants.DB_PATH)
+    user = Query()
+    responce = db.search((user["Login"] == login) & (user["Passwd"] == password))
+    if ((len(responce) == 0) or (len(responce) > 1)):
+        return 1
+    elif (len(responce) == 1):
+        rIndex = -1
+        for i, add in enumerate(responce[0]["ads"]):
+            if add["id"] == addNew["id"]:
+                rIndex = i
+        responce[0]["ads"][rIndex] = addNew
+        db.update(responce[0], (user["Login"] == login) & (user["Passwd"] == password))
     return 0
 
 def find_all_ads_with_category(category):
     # вернуть всю рекламу от пользователей с заданной категорией должности
     # формат вывода или список словарей с ключами FIO, Tel (взять от юзера-обладателя-объявления), Title, Adres, About, или None
-    return None
+    db = TinyDB(constants.DB_PATH)
+    user = Query()
+    responce = db.search(user["Work"] == category)
+    if (len(responce) == 0):
+        return None
+    else:
+        adsf = []
+        for user in responce:
+            #print(user.items())
+            for f in range(len(user["ads"])):
+                elem = {
+                "FIO": user["Name"],
+                "Tel": user["Telephon"],
+                "Title": user["ads"][f]["Title"],
+                "id": user["ads"][f]["id"],
+                "Adres": user["ads"][f]["Adres"],
+                "About": user["ads"][f]["About"]
+            }
+                adsf.append(elem)
+
+        return adsf

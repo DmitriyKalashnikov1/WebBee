@@ -75,9 +75,9 @@ def login():
             user_info["isStat"] = "Кочевка"
 
         if (hasMoveablePlotform == "yes"):
-            user_info["hasMoveablePlotform"] = "Да"
+            user_info["hasMoveablePlatform"] = "Да"
         else:
-            user_info["hasMoveablePlotform"] = "Нет"
+            user_info["hasMoveablePlatform"] = "Нет"
 
         if (purpose == "med"):
             user_info["purpose"] = "Медовое направление"
@@ -86,17 +86,17 @@ def login():
         elif (purpose == "opul"):
             user_info["purpose"] = "Опыление"
 
-        if user_info["Work"] == 'Пчеловод':
+        if user_info["Work"] == 'beekeepers':
             db_api.regist_user(user_info)
 
             return redirect("whoami.html")
-        elif user_info["Work"] == 'Фермер':
+        elif user_info["Work"] == 'farmers':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_farmers.html")
-        elif user_info["Work"] == 'Соискатель':
+        elif user_info["Work"] == 'workers':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_workers.html")
-        elif user_info["Work"] == 'Рекламодатель':
+        elif user_info["Work"] == 'advertisers':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_advertisers.html")
 
