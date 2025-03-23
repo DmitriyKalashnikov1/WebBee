@@ -21,7 +21,6 @@
         <li>  <button class="header-buttons" onclick="document.location='index.html'">О нас</button> </li>
     </ol>
 </div>
-
 <div class="main-text">
 
         <h1> Логин: {{who["Login"]}}</h1>
@@ -42,11 +41,96 @@
         </table>
     </div>
     <div class="about"> <h2>О себе: </h2>{{ who["About"] }} </div>
+    {%if who["Work"] == "beekeepers"%}
     <div class="numberOfPassportofPasika"> <h3>Паспорт пасеки №: {{ who["numberOfPassportofPasika"] }}</h3> </div>
     <div class="numberOfFamaly"> <h3> Количество семей: {{ who["numberOfFamily"] }} </h3> </div>
     <div class="isStat"> <h3> Стационар или кочевка: {{ who["isStat"] }} </h3> </div>
     <div class="hasMoveablePlotform"> <h3> Наличие передвижных платформ: {{ who["hasMoveablePlatform"] }} </h3> </div>
     <div class="Purpose"> <h3> Цель разведения пчел: {{ who["purpose"] }} </h3> </div>
+    {%endif%}
+    {%if who["Work"] == "farmers"%}
+    <div class="INN"> <h3> ИНН: {{who["INN"]}} </h3> </div>
+    <div class="OGRN"> <h3> ОГРН: {{who["OGRN"]}} </h3> </div>
+    <div class="FAX"> <h3> ФАКС: {{who["Fax"]}} </h3> </div>
+    <div class="Site"> <h3> Сайт: {{who["Site"]}} </h3> </div>
+    <div class="PlantArea"> <h3> Посевная площадь (в Га): {{who["PlantArea"]}} </h3> </div>
+    <div class="Raps"> <h3> Посевная площадь Рапса (в Га): {{who["Raps"]}} </h3> </div>
+    <div class="Grechka"> <h3> Посевная площадь Гречки (в Га): {{who["Grechka"]}} </h3> </div>
+    <div class="Podsun"> <h3> Посевная площадь Подсолнуха (в Га): {{who["Podsun"]}} </h3> </div>
+    <div class="Gorchza"> <h3> Посевная площадь Горчицы (в Га): {{who["Gorchza"]}} </h3> </div>
+    <div class="Opul"> <h3> Необходимость опыления </h3> </div>
+    {%if who["NeedOpul"] == "NeedOpul"%}
+    <div class="Opul"> <h4> Требуются услуги опыления </h4> </div>
+    {%endif%}
+    {%if who["NeedOpul"] == "NotNeedOpul"%}
+    <div class="Opul"> <h4> Готов разместить пасеку без услуг опыления  </h4> </div>
+    {%endif%}
+    <div class="Price"> <h3> Цена за опыление одной пасеки (в тыс. руб): {{who["Price"]}} </h3> </div>
+
+    {%if who["Delivery"] == "yes"%}
+    <div class="Delivery"> <h3> Доставка: да  </h3> </div>
+    {%endif%}
+
+    {%if not (who["Delivery"] == "yes")%}
+    <div class="Delivery"> <h3> Доставка: нет  </h3> </div>
+    {%endif%}
+
+    {%if who["Secure"] == "yes"%}
+    <div class="Secure"> <h3> Охрана: да  </h3> </div>
+    {%endif%}
+
+    {%if not (who["Secure"] == "yes")%}
+    <div class="Secure"> <h3> Охрана: нет  </h3> </div>
+    {%endif%}
+
+    {%endif%}
+
+    {%if who["Work"] == "workers"%}
+    <div class = "WorkType"> <h3>Тип работ: </h3> </div>
+        {%if who["WorkType"] == "celxoz"%}
+        <div class="WorkType"> <h4> Сельхозработник  </h4> </div>
+        {%endif%}
+
+        {%if who["WorkType"] == "storoz"%}
+        <div class="WorkType"> <h4> Сторож  </h4> </div>
+        {%endif%}
+
+        {%if who["WorkType"] == "helperBeek"%}
+        <div class="WorkType"> <h4> Помошник пчеловода  </h4> </div>
+        {%endif%}
+
+        {%if who["WorkType"] == "stolyr"%}
+        <div class="WorkType"> <h4> Столяр  </h4> </div>
+        {%endif%}
+    {%endif%}
+
+{%if who["Work"] == "advertisers"%}
+    <div class = "bannerType"> <h3>Тип рекламы: </h3> </div>
+        {%if who["BannerType"] == "fertilizers"%}
+        <div class="bannerType"> <h4> Удобрения  </h4> </div>
+        {%endif%}
+
+        {%if who["BannerType"] == "toxic"%}
+        <div class="bannerType"> <h4> Ядохимикаты  </h4> </div>
+        {%endif%}
+
+        {%if who["BannerType"] == "celtex"%}
+        <div class="bannerType"> <h4> Сельхоз. техника  </h4> </div>
+        {%endif%}
+
+        {%if who["BannerType"] == "uliy"%}
+        <div class="bannerType"> <h4> Ульи  </h4> </div>
+        {%endif%}
+
+        {%if who["BannerType"] == "vochina"%}
+        <div class="bannerType"> <h4> Вощина </h4> </div>
+        {%endif%}
+
+        {%if who["BannerType"] == "medogonki"%}
+        <div class="bannerType"> <h4> Медогонки </h4> </div>
+        {%endif%}
+    <div class="opisanie"> <h3>Описание: {{who["BannerAbout"]}} </h3> </div>
+    {%endif%}
 
 {%if not (ads == None)%}
 <h3>Ваши объявления</h3>
