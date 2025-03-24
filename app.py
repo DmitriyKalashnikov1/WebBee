@@ -1,11 +1,27 @@
 from flask import Flask, render_template, url_for, session, request, redirect
 import os
+import sys
 import constants
 import db_api
 
-app = Flask(__name__)
-app.debug = True
-app.config['SECRET_KEY'] = str(os.urandom(20).hex())
+if getattr(sys, 'frozen', False):
+    template_folder = os.path.join(sys._MEIPASS, 'templates')
+    static_folder = os.path.join(sys._MEIPASS, 'static')
+    constants.init()
+
+    if os.path.isfile(constants.DB_PATH) == False:
+        with open(constants.DB_PATH, 'w') as file:
+            file.write("")
+
+    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+    app.config['SECRET_KEY'] = str(os.urandom(20).hex())
+else:
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = str(os.urandom(20).hex())
+    if os.path.isfile(constants.DB_PATH) == False:
+        with open(constants.DB_PATH, 'w') as file:
+            file.write("")
+
 
 @app.route('/index.html')
 @app.route('/')
@@ -384,7 +400,4 @@ def logrem():
     return redirect("/logout.html")
 
 if __name__ == '__main__':
-    if os.path.isfile(constants.DB_PATH) == False:
-        with open(constants.DB_PATH, 'w') as file:
-            file.write("")
     app.run()

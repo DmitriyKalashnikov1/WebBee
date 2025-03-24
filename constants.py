@@ -1,3 +1,6 @@
+import os
+import sys
+
 AUTORS = [{"Name": "Калашников Дмитрий Александрович", "Work": "Главный разработчик данного сайта",
            "Email": "slagterra2017@yandex.ru", "Telephon": "8901235467"},
           {"Name": "Томаков Максим В.", "Work": "Гениральный директор сайта",
@@ -40,3 +43,6 @@ Ads = [
 DB_PATH = './DB.json'
 
 HAS_TEST_DATA = False
+
+def init():
+    DB_PATH = os.path.join(sys._MEIPASS, "DB.json")
