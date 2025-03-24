@@ -19,6 +19,8 @@
         <li>  <button class="header-buttons" onclick="document.location='workers.html'">Соискатель на работу</button> </li>
         <li>  <button class="header-buttons" onclick="document.location='roscoltrol.html'">Надзор</button> </li>
         <li>  <button class="header-buttons" onclick="document.location='index.html'">О нас</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='logout.html'"> Выйти из аккаунта</button> </li>
+        <li>  <button class="header-buttons" onclick="document.location='logrem.html'"> Удалить аккаунт</button> </li>
     </ol>
 </div>
 <div class="main-text">
@@ -34,7 +36,19 @@
                 <th>Телефон</th>
             </tr>
             <tr>
-                <td>{{ who["Work"] }}</td>
+                {%if who["Work"] == "beekeepers"%}
+                <td> Пчеловод </td>
+                {%endif%}
+                {%if who["Work"] == "farmers"%}
+                <td> Фермер </td>
+                {%endif%}
+                {%if who["Work"] == "workers"%}
+                <td> Работник </td>
+                {%endif%}
+                {%if who["Work"] == "advertisers"%}
+                <td> Рекламодатель </td>
+                {%endif%}
+
                 <td>{{ who["Email"] }}</td>
                 <td>{{ who["Telephon"] }}</td>
             </tr>
@@ -103,8 +117,7 @@
         <div class="WorkType"> <h4> Столяр  </h4> </div>
         {%endif%}
     {%endif%}
-
-{%if who["Work"] == "advertisers"%}
+    {%if who["Work"] == "advertisers"%}
     <div class = "bannerType"> <h3>Тип рекламы: </h3> </div>
         {%if who["BannerType"] == "fertilizers"%}
         <div class="bannerType"> <h4> Удобрения  </h4> </div>

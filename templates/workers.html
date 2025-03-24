@@ -23,7 +23,7 @@
 </div>
 
 <div class="main-text">
-    {%if not (ads == None)%}
+    {%if not ((ads == None) or (ads|length == 0))%}
         <div class="table-of-contacts">
             <table>
                 <tr>
@@ -46,8 +46,8 @@
         </div>
     {%endif%}
 
-    {%if (ads == None)%}
-    <h1> Пользователей с объявлениями типа 'Соискатель на работу' еще нет, станьте первым!</h1>
+    {%if ((ads == None) or (ads|length == 0))%}
+    <h1> Объявлений от пользователей типа 'Соискатель на работу' еще нет, станьте первым!</h1>
     {%endif%}
 </div>
 

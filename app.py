@@ -88,14 +88,16 @@ def login():
 
         if user_info["Work"] == 'beekeepers':
             db_api.regist_user(user_info)
-
             return redirect("whoami.html")
+
         elif user_info["Work"] == 'farmers':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_farmers.html")
+
         elif user_info["Work"] == 'workers':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_workers.html")
+
         elif user_info["Work"] == 'advertisers':
             session["preRegistrInfo"] = user_info
             return redirect("dop_registr_advertisers.html")
@@ -195,7 +197,7 @@ def WorkersReg():
 def AdvertisersReg():
     preRegistrInfo = session["preRegistrInfo"]
     bannerType = request.form.get("bannerType")
-    bannerAbout = request.form.get("about")
+    bannerAbout = request.form.get("opisanie")
 
     user_info = {
         "Login": preRegistrInfo["Login"],
@@ -243,6 +245,7 @@ def AddAdd():
     if not session.modified:
         session.modified = True
     return redirect("/whoami.html")
+
 @app.route("/changeAdd.html")
 def changeAddHTML():
     return render_template("changeAdd.html")
@@ -349,8 +352,36 @@ def roscoltrol():
     return render_template("/roscoltrol.html")
 
 @app.route("/selectRegion.html")
-def selectRegion():
-    return render_template("/selectRegion.html")
+def selectRegionHTML():
+    if ("isAutorise" in session):
+        return render_template("/selectRegion.html")
+    else:
+        return render_template("/notAutoriseUser.html")
+
+@app.route("/selectRegion/",  methods=["POST",])
+def selectRegionForm():
+    reg = request.form.get("region")
+
+    if not session.modified:
+        session.modified = True
+
+    session["user"]["Region"] = reg
+    db_api.changeRegion(session["user"]["Login"], session["user"]["Passwd"], reg)
+    return redirect("/whoami.html")
+
+@app.route("/logout.html")
+def logout():
+    if not session.modified:
+        session.modified = True
+    session.pop("isAutorise")
+    session.pop("user")
+    session.pop("ads")
+    return redirect("/index.html")
+
+@app.route("/logrem.html")
+def logrem():
+    db_api.unregist_user(session["user"]["Login"], session["user"]["Passwd"])
+    return redirect("/logout.html")
 
 if __name__ == '__main__':
     if os.path.isfile(constants.DB_PATH) == False:

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
     <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="shortcut icon">
     <link type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" rel="icon">
-    <title>Фермер</title>
+    <title>Not Autorise!</title>
 </head>
 <body>
 <div class="header">
@@ -23,33 +23,9 @@
 </div>
 
 <div class="main-text">
-    {%if not ((ads == None) or (ads|length == 0))%}
-        <div class="table-of-contacts">
-            <table>
-                <tr>
-                    <th>ФИО</th>
-                    <th>Телефон</th>
-                    <th>Заголовок</th>
-                    <th>Адрес</th>
-                    <th>Подробности</th>
-                </tr>
-                {% for a in ads %}
-            <tr>
-                <td>{{ a["FIO"] }}</td>
-                <td>{{ a["Tel"] }}</td>
-                <td>{{ a["Title"] }}</td>
-                <td>{{ a["Adres"] }}</td>
-                <td>{{ a["About"] }}</td>
-            </tr>
-            {%endfor%}
-            </table>
-        </div>
-    {%endif%}
-
-    {%if ((ads == None) or (ads|length == 0))%}
-    <h1> Объявлений от пользователей типа 'Фермер' еще нет, станьте первым!</h1>
-    {%endif%}
-</div>
-
+    <h1>Вы не авторизованны.
+    <br> Пожалуйста, залогиньтесь!
+    </h1>
+</div>>
 </body>
 </html>

@@ -20,13 +20,12 @@ def regist_user(user_info):
     db = TinyDB(constants.DB_PATH)
     db.insert(user_info)
     return 0
-def unregist_user(user_info):
+def unregist_user(login, passwd):
     #Удалить пользователя из базы
     # вернуть 0 если операция успешна, 1 -- в противном случае
     db = TinyDB(constants.DB_PATH)
     user = Query()
-    req = db.search((user["Login"] == user_info["Login"]) & (user["Passwd"] == user_info["Passwd"]))
-    db.remove(req)
+    req = db.remove((user["Login"] == login) & (user["Passwd"] == passwd))
     return 0
 def add_ads_for_user(login, password, ads):
     # добавить конкретному юзеру новую рекламу
@@ -99,3 +98,16 @@ def find_all_ads_with_category(category):
                 adsf.append(elem)
 
         return adsf
+
+def changeRegion(login, password, region):
+    # изменить содержание рекламного элемента
+    # вернуть 0 если операция успешна, 1 -- в противном случае
+    db = TinyDB(constants.DB_PATH)
+    user = Query()
+    responce = db.search((user["Login"] == login) & (user["Passwd"] == password))
+    if ((len(responce) == 0) or (len(responce) > 1)):
+        return 1
+    elif (len(responce) == 1):
+        responce[0]["Region"] = region
+        db.update(responce[0], (user["Login"] == login) & (user["Passwd"] == password))
+        return 0
