@@ -45,4 +45,5 @@ DB_PATH = './DB.json'
 HAS_TEST_DATA = False
 
 def init():
+    global DB_PATH
     DB_PATH = os.path.join(sys._MEIPASS, "DB.json")

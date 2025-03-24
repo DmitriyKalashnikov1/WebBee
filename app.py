@@ -8,7 +8,8 @@ if getattr(sys, 'frozen', False):
     template_folder = os.path.join(sys._MEIPASS, 'templates')
     static_folder = os.path.join(sys._MEIPASS, 'static')
     constants.init()
-
+    print("DB path: "+os.path.abspath(constants.DB_PATH))
+    print("Template path: "+template_folder)
     if os.path.isfile(constants.DB_PATH) == False:
         with open(constants.DB_PATH, 'w') as file:
             file.write("")
